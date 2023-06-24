@@ -43,7 +43,6 @@
                         <th>Password</th>
                         <th>Year of birth</th>
                         <th>Roles</th>
-                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -53,11 +52,6 @@
                         <td>[[${user.password}]]</td>
                         <td>[[${user.yearOfBirth}]]</td>
                         <td>[[${user.roles}]]</td>
-                        <td>
-                            <form th:method="DELETE" th:action="@{/admin/user/{id}(id=${user.getId()})}">
-                                <input type="submit" value="Delete">
-                            </form>
-                        </td>
                     </tr>
                     </tbody>
                 </table>

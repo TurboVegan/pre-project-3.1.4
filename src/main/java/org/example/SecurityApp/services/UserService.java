@@ -1,7 +1,7 @@
 package org.example.SecurityApp.services;
 
 import org.example.SecurityApp.models.User;
-import org.example.SecurityApp.repositories.UsersRepository;
+import org.example.SecurityApp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,29 +12,29 @@ import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
-public class UsersService {
+public class UserService {
 
     private final PasswordEncoder passwordEncoder;
-    private final UsersRepository usersRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UsersService(PasswordEncoder passwordEncoder, UsersRepository usersRepository) {
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
-        this.usersRepository = usersRepository;
+        this.userRepository = userRepository;
     }
 
     public List<User> findAll() {
-        return usersRepository.findAll();
+        return userRepository.findAll();
     }
 
     public User findOne(int id) {
-        Optional<User> foundPerson = usersRepository.findById(id);
+        Optional<User> foundPerson = userRepository.findById(id);
 
         return foundPerson.orElse(null);
     }
 
     public User findByUsername(String username) {
-        Optional<User> foundPerson = usersRepository.findByUsername(username);
+        Optional<User> foundPerson = userRepository.findByUsername(username);
 
         return foundPerson.orElse(null);
     }
@@ -42,18 +42,18 @@ public class UsersService {
     @javax.transaction.Transactional
     public void register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        usersRepository.save(user);
+        userRepository.save(user);
     }
 
     @Transactional
     public void update(int id, User updatedPerson) {
         updatedPerson.setId(id);
         updatedPerson.setPassword(passwordEncoder.encode(updatedPerson.getPassword()));
-        usersRepository.save(updatedPerson);
+        userRepository.save(updatedPerson);
     }
 
     @Transactional
     public void delete(int id) {
-        usersRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 }

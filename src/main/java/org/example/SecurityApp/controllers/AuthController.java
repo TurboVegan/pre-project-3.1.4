@@ -2,7 +2,7 @@ package org.example.SecurityApp.controllers;
 
 import org.example.SecurityApp.models.Role;
 import org.example.SecurityApp.models.User;
-import org.example.SecurityApp.repositories.RolesRepository;
+import org.example.SecurityApp.repositories.RoleRepository;
 import org.example.SecurityApp.services.RegistrationService;
 import org.example.SecurityApp.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ import java.util.List;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final RolesRepository rolesRepository;
+    private final RoleRepository roleRepository;
     private final RegistrationService registrationService;
     private final UserValidator userValidator;
 
     @Autowired
-    public AuthController(RolesRepository rolesRepository, RegistrationService registrationService, UserValidator userValidator) {
-        this.rolesRepository = rolesRepository;
+    public AuthController(RoleRepository roleRepository, RegistrationService registrationService, UserValidator userValidator) {
+        this.roleRepository = roleRepository;
         this.registrationService = registrationService;
         this.userValidator = userValidator;
     }
@@ -43,7 +43,7 @@ public class AuthController {
         ModelAndView mav = new ModelAndView("auth/registration");
         mav.addObject("user", user);
 
-        List<Role> roles = (List<Role>) rolesRepository.findAll();
+        List<Role> roles = (List<Role>) roleRepository.findAll();
 
         mav.addObject("allRoles", roles);
 

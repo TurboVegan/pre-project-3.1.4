@@ -3,7 +3,7 @@ package org.example.SecurityApp.controllers;
 
 import org.example.SecurityApp.models.User;
 import org.example.SecurityApp.services.UsersDetailsService;
-import org.example.SecurityApp.services.UsersService;
+import org.example.SecurityApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,16 +18,16 @@ import java.security.Principal;
 @RequestMapping("/user")
 public class UsersController {
 
-	private final UsersService usersService;
+	private final UserService userService;
 
 	@Autowired
-	public UsersController(UsersService usersService, UsersDetailsService usersDetailsService) {
-		this.usersService = usersService;
+	public UsersController(UserService userService, UsersDetailsService usersDetailsService) {
+		this.userService = userService;
 	}
 
 	@GetMapping()
 	public String index(Principal principal, ModelMap model) {
-		User user = usersService.findByUsername(principal.getName());
+		User user = userService.findByUsername(principal.getName());
 
 		model.addAttribute("user", user);
 		return "user/index";
@@ -35,7 +35,7 @@ public class UsersController {
 
 	@DeleteMapping("/{id}")
 	public String delete(@PathVariable("id") int id) {
-		usersService.delete(id);
+		userService.delete(id);
 		return "redirect:/auth/login";
 	}
 }
